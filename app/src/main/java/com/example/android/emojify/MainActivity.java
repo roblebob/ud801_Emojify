@@ -24,17 +24,18 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.IOException;
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+
             // Create the temporary File where the photo should go
             File photoFile = null;
             try {
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 // Error occurred while creating the File
                 ex.printStackTrace();
             }
+
             // Continue only if the File was successfully created
             if (photoFile != null) {
 
@@ -153,12 +156,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult( requestCode, resultCode, data);
+
         // If the image capture activity was called and was successful
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             // Process the image and set it to the TextView
             processAndSetImage();
+
         } else {
 
             // Otherwise, delete the temporary image file
@@ -172,11 +178,11 @@ public class MainActivity extends AppCompatActivity {
     private void processAndSetImage() {
 
         // Toggle Visibility of the views
-        mEmojifyButton.setVisibility(View.GONE);
-        mTitleTextView.setVisibility(View.GONE);
-        mSaveFab.setVisibility(View.VISIBLE);
-        mShareFab.setVisibility(View.VISIBLE);
-        mClearFab.setVisibility(View.VISIBLE);
+        mEmojifyButton .setVisibility( View.GONE);
+        mTitleTextView .setVisibility( View.GONE);
+        mSaveFab  .setVisibility( View.VISIBLE);
+        mShareFab .setVisibility( View.VISIBLE);
+        mClearFab .setVisibility( View.VISIBLE);
 
         // Resample the saved image to fit the ImageView
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
