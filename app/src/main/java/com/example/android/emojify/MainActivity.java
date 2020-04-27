@@ -228,12 +228,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void clearImage(View view) {
         // Clear the image and toggle the view visibility
-        mImageView.setImageResource(0);
-        mEmojifyButton.setVisibility(View.VISIBLE);
-        mTitleTextView.setVisibility(View.VISIBLE);
-        mShareFab.setVisibility(View.GONE);
-        mSaveFab.setVisibility(View.GONE);
-        mClearFab.setVisibility(View.GONE);
+        mImageView .setImageResource(0);
+        mEmojifyButton .setVisibility( View.VISIBLE);
+        mTitleTextView. setVisibility( View.VISIBLE);
+        mShareFab .setVisibility( View.GONE);
+        mSaveFab .setVisibility( View.GONE);
+        mClearFab .setVisibility( View.GONE);
 
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
