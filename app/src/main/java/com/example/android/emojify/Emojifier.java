@@ -45,24 +45,35 @@ class Emojifier {
                 .build();
 
         // Build the frame
-        Frame frame = new Frame.Builder().setBitmap(picture).build();
+        Frame frame = new Frame.Builder()
+                .setBitmap(picture)
+                .build();
 
         // Detect the faces
-        SparseArray<Face> faces = detector.detect(frame);
+        SparseArray< Face> faces = detector .detect( frame);
 
         // Log the number of faces
         Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
 
         // If there are no faces detected, show a Toast message
-        if(faces.size() == 0){
+        if( faces.size() == 0){
             Toast.makeText(context, R.string.no_faces_message, Toast.LENGTH_SHORT).show();
+        } else {
+            // TODO (2): Iterate through the faces, calling getClassifications() for each face.
+            for (int i = 0; i < faces.size(); i++) {
+                getClassification( faces.get( i));
+            }
         }
-
-        // TODO (2): Iterate through the faces, calling getClassifications() for each face.
 
         // Release the detector
         detector.release();
     }
 
     // TODO (1): Create a static method called getClassifications() which logs the probability of each eye being open and that the person is smiling.
+    static void getClassification(Face face) {
+
+
+    }
+
+
 }
