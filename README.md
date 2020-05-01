@@ -26,7 +26,7 @@ You can copy the code for this method below, and I will step through the functio
 For a more detailed explanation on working with 2D graphics take a look at the [Developer Docs](https://developer.android.com/guide/topics/graphics/2d-graphics.html).
 
 
-```
+```java
 /**
 * Combines the original picture with the emoji bitmaps
 *
