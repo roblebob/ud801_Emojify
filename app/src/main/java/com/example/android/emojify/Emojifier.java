@@ -40,8 +40,11 @@ class Emojifier {
 
         // Create the face detector, disable tracking and enable classifications
         FaceDetector detector = new FaceDetector.Builder(context)
+
+                // to improve performance by disabling tracking (which maintains an ID between consecutive frames if the same face exists in both of them
                 .setTrackingEnabled(false)
                 .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
+                //
                 .build();
 
         // Build the frame
@@ -72,7 +75,9 @@ class Emojifier {
     // TODO (1): Create a static method called getClassifications() which logs the probability of each eye being open and that the person is smiling.
     static void getClassification(Face face) {
 
-
+        Log.d(LOG_TAG, "getClassification():" + "\t" + "getIsLeftEyeOpenProbability()"  + "\t=\t" + face.getIsLeftEyeOpenProbability());
+        Log.d(LOG_TAG, "getClassification():" + "\t" + "getIsRightEyeOpenProbability()" + "\t=\t" + face.getIsRightEyeOpenProbability());
+        Log.d(LOG_TAG, "getClassification():" + "\t" + "getIsSmilingProbability()"      + "\t=\t" + face.getIsSmilingProbability());
     }
 
 
