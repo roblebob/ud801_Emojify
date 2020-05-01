@@ -154,14 +154,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    @Override protected void onActivityResult( int requestCode, int resultCode, Intent data) {
+        super.onActivityResult( requestCode, resultCode, data);
 
         // If the image capture activity was called and was successful
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             // Process the image and set it to the TextView
             processAndSetImage();
+
         } else {
 
             // Otherwise, delete the temporary image file
@@ -175,20 +176,20 @@ public class MainActivity extends AppCompatActivity {
     private void processAndSetImage() {
 
         // Toggle Visibility of the views
-        mEmojifyButton.setVisibility(View.GONE);
-        mTitleTextView.setVisibility(View.GONE);
-        mSaveFab.setVisibility(View.VISIBLE);
-        mShareFab.setVisibility(View.VISIBLE);
-        mClearFab.setVisibility(View.VISIBLE);
+        mEmojifyButton .setVisibility( View.GONE);
+        mTitleTextView .setVisibility( View.GONE);
+        mSaveFab  .setVisibility( View.VISIBLE);
+        mShareFab .setVisibility( View.VISIBLE);
+        mClearFab .setVisibility( View.VISIBLE);
 
         // Resample the saved image to fit the ImageView
-        mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
+        mResultsBitmap = BitmapUtils .resamplePic(this, mTempPhotoPath);
         
         // Detect the faces
-        Emojifier.detectFaces(this, mResultsBitmap);
+        Emojifier .detectFaces(this, mResultsBitmap);
         
         // Set the new bitmap to the ImageView
-        mImageView.setImageBitmap(mResultsBitmap);
+        mImageView .setImageBitmap( mResultsBitmap);
     }
 
 
@@ -197,12 +198,9 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The save button.
      */
-    public void saveMe(View view) {
-        // Delete the temporary image file
-        BitmapUtils.deleteImageFile(this, mTempPhotoPath);
-
-        // Save the image
-        BitmapUtils.saveImage(this, mResultsBitmap);
+    public void saveMe( View view) {
+        BitmapUtils.deleteImageFile( this, mTempPhotoPath);     // Delete the temporary image file
+        BitmapUtils.saveImage(       this, mResultsBitmap);     // Save the image
     }
 
     /**
@@ -210,15 +208,10 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The share button.
      */
-    public void shareMe(View view) {
-        // Delete the temporary image file
-        BitmapUtils.deleteImageFile(this, mTempPhotoPath);
-
-        // Save the image
-        BitmapUtils.saveImage(this, mResultsBitmap);
-
-        // Share the image
-        BitmapUtils.shareImage(this, mTempPhotoPath);
+    public void shareMe( View view) {
+        BitmapUtils .deleteImageFile(this, mTempPhotoPath);     // Delete the temporary image file
+        BitmapUtils .saveImage(      this, mResultsBitmap);     // Save the image
+        BitmapUtils .shareImage(     this, mTempPhotoPath);     // Share the image
     }
 
     /**
@@ -226,14 +219,14 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The clear button.
      */
-    public void clearImage(View view) {
+    public void clearImage( View view) {
         // Clear the image and toggle the view visibility
-        mImageView.setImageResource(0);
-        mEmojifyButton.setVisibility(View.VISIBLE);
-        mTitleTextView.setVisibility(View.VISIBLE);
-        mShareFab.setVisibility(View.GONE);
-        mSaveFab.setVisibility(View.GONE);
-        mClearFab.setVisibility(View.GONE);
+        mImageView .setImageResource( 0);
+        mEmojifyButton .setVisibility( View.VISIBLE);
+        mTitleTextView .setVisibility( View.VISIBLE);
+        mShareFab .setVisibility( View.GONE);
+        mSaveFab  .setVisibility( View.GONE);
+        mClearFab .setVisibility( View.GONE);
 
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
