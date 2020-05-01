@@ -20,8 +20,12 @@ public class Emojifier {
 
         // TODO [✓] (2a): Create the face detector, disable tracking and enable classifications
         FaceDetector detector = new FaceDetector .Builder( context)
-                .setTrackingEnabled( false)
-                .setClassificationType( FaceDetector.ALL_CLASSIFICATIONS)
+
+                // to improve performance by disabling tracking (which maintains an ID between consecutive frames if the same face exists in both of them
+                .setTrackingEnabled(false)
+                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
+                //
+
                 .build();
 
         // TODO [✓] (2b):  Build the frame
