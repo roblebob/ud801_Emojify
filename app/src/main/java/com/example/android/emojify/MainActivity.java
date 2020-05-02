@@ -49,21 +49,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
 
     private ImageView mImageView;
-
     private Button mEmojifyButton;
     private FloatingActionButton mShareFab;
     private FloatingActionButton mSaveFab;
     private FloatingActionButton mClearFab;
-
     private TextView mTitleTextView;
-
     private String mTempPhotoPath;
-
     private Bitmap mResultsBitmap;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -157,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         // If the image capture activity was called and was successful
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             // Process the image and set it to the TextView
@@ -184,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
         
         // Detect the faces
-        Emojifier.detectFaces(this, mResultsBitmap);
+        Emojifier.detectFacesAndOverlayEmoji(this, mResultsBitmap);
         // TODO (10): Change the method call from detectFaces() to detectFacesAndOverlayEmoji() and assign the result to mResultsBitmap.
         
         // Set the new bitmap to the ImageView
