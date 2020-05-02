@@ -100,6 +100,7 @@ class Emojifier {
         // Release the detector
         detector.release();
         // TODO (9): Return the resultBitmap
+        return resultBitmap;
     }
 
 
