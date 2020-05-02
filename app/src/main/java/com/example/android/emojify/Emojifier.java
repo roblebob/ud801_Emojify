@@ -63,8 +63,7 @@ class Emojifier {
         Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
 
         // TODO (7): Create a variable called resultBitmap and initialize it to the original picture bitmap passed into the detectFacesAndOverlayEmoji() method
-        Bitmap.Config config = ;
-        Bitmap resultBitmap = picture.copy(config, true);
+        Bitmap resultBitmap = picture;
 
         // If there are no faces detected, show a Toast message
         if(faces.size() == 0) {
@@ -161,8 +160,13 @@ class Emojifier {
     }
 
     // TODO (6) Create a method called addBitmapToFace() which takes the background bitmap, the Emoji bitmap, and a Face object as arguments and returns the combined bitmap with the Emoji over the face.
-    private static  Bitmap addBitmapToFace(Bitmap backgroundBitmap, @NonNull Bitmap emojiBitmap, Face face) {
+    private static  Bitmap addBitmapToFace(Bitmap backgroundBitmap, Bitmap emojiBitmap, Face face) {
 
+        if( emojiBitmap == null) return backgroundBitmap;
+        else {
+
+
+        }
         return null;
     }
 
