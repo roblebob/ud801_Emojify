@@ -185,13 +185,13 @@ class Emojifier {
      * @param face             The detected face
      * @return The final bitmap, including the emojis over the faces
      */
-    private static Bitmap addBitmapToFace(Bitmap backgroundBitmap, Bitmap emojiBitmap, Face face) {
+    private static Bitmap addBitmapToFace( Bitmap backgroundBitmap, Bitmap emojiBitmap, Face face) {
 
         // Initialize the results bitmap to be a mutable copy of the original image
-        Bitmap resultBitmap = Bitmap.createBitmap(
-                backgroundBitmap.getWidth(),
-                backgroundBitmap.getHeight(),
-                backgroundBitmap.getConfig()
+        Bitmap resultBitmap = Bitmap .createBitmap(
+                backgroundBitmap .getWidth(),
+                backgroundBitmap .getHeight(),
+                backgroundBitmap .getConfig()
         );
 
         // Scale the emoji so it looks better on the face
