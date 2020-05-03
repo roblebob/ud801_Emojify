@@ -19,6 +19,7 @@ package com.example.android.emojify;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ class Emojifier {
 
     private static final double SMILING_PROB_THRESHOLD = .15;
     private static final double EYE_OPEN_PROB_THRESHOLD = .5;
+    private static final double EMOJI_SCALE_FACTOR = 1.0;
 
     /**
      * Method for detecting faces in a bitmap.
@@ -62,7 +64,7 @@ class Emojifier {
         // Log the number of faces
         Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
 
-        // TODO (7): Create a variable called resultBitmap and initialize it to the original picture bitmap passed into the detectFacesAndOverlayEmoji() method
+        // TODO [✓] (7): Create a variable called resultBitmap and initialize it to the original picture bitmap passed into the detectFacesAndOverlayEmoji() method
         Bitmap resultBitmap = picture;
 
         // If there are no faces detected, show a Toast message
@@ -89,16 +91,15 @@ class Emojifier {
                     case CLOSED_EYE_SMILE:  emojiBitmap = BitmapFactory.decodeResource( context.getResources(), R.drawable.closed_smile);   break;
                     default:                emojiBitmap = null;
                 }
-                // TODO (8): Call addBitmapToFace(), passing in the resultBitmap, the emojiBitmap and the Face  object, and assigning the result to resultBitmap
+                // TODO [✓] (8): Call addBitmapToFace(), passing in the resultBitmap, the emojiBitmap and the Face  object, and assigning the result to resultBitmap
                 resultBitmap = addBitmapToFace( resultBitmap, emojiBitmap, face);
 
             }
         }
 
-
         // Release the detector
         detector.release();
-        // TODO (9): Return the resultBitmap
+        // TODO [✓] (9): Return the resultBitmap
         return resultBitmap;
     }
 
@@ -159,15 +160,30 @@ class Emojifier {
         return emoji;
     }
 
-    // TODO (6) Create a method called addBitmapToFace() which takes the background bitmap, the Emoji bitmap, and a Face object as arguments and returns the combined bitmap with the Emoji over the face.
-    private static  Bitmap addBitmapToFace(Bitmap backgroundBitmap, Bitmap emojiBitmap, Face face) {
+    // TODO [✓] (6) Create a method called addBitmapToFace() which takes the background bitmap, the Emoji bitmap, and a Face object as arguments and returns the combined bitmap with the Emoji over the face.
+    private static  Bitmap addBitmapToFace(  Bitmap backgroundBitmap,  Bitmap emojiBitmap,  Face face) {
 
-        if( emojiBitmap == null) return backgroundBitmap;
-        else {
+        Bitmap resultBitmap = Bitmap .createBitmap(
+                backgroundBitmap.getWidth(),
+                backgroundBitmap.getHeight(),
+                backgroundBitmap.getConfig()
+        );
 
+        float scaleFactor = (float) EMOJI_SCALE_FACTOR;
 
-        }
-        return null;
+        int newEmojiWidth = (int) ( face.getWidth() * scaleFactor);
+        int newEmojiHeight = (int) (  emojiBitmap.getHeight()  *  newEmojiWidth   /  emojiBitmap.getWidth());
+
+        emojiBitmap = Bitmap .createScaledBitmap(  emojiBitmap,  newEmojiWidth,  newEmojiHeight,  false);
+
+        float emojiPositionX =  face .getPosition().x   +   (face .getWidth() / 2)   -  (emojiBitmap .getWidth() / 2);
+        float emojiPositionY =  face .getPosition().y   +   (face .getHeight() / 2)  -  (emojiBitmap .getHeight() / 3);
+
+        Canvas canvas = new Canvas( resultBitmap);
+        canvas .drawBitmap( backgroundBitmap, 0, 0,null);
+        canvas .drawBitmap( emojiBitmap, emojiPositionX, emojiPositionY, null);
+
+        return resultBitmap;
     }
 
 
