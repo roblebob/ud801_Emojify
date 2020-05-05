@@ -24,57 +24,60 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.File;
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    // TODO (2): Replace all View declarations with Butterknife annotations
+    // TODO [✓] (2): Replace all View declarations with Butterknife annotations
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
 
     private static final String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
 
-    private ImageView mImageView;
-
-    private Button mEmojifyButton;
-    private FloatingActionButton mShareFab;
-    private FloatingActionButton mSaveFab;
-    private FloatingActionButton mClearFab;
-
-    private TextView mTitleTextView;
-
     private String mTempPhotoPath;
-
     private Bitmap mResultsBitmap;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    // TODO [✓] (... 3 continued:)
+    @BindView(R.id.image_view)      private ImageView mImageView;
+    @BindView(R.id.emojify_button)  private Button mEmojifyButton;
+    @BindView(R.id.share_button)    private FloatingActionButton mShareFab;
+    @BindView(R.id.share_button)    private FloatingActionButton mSaveFab;
+    @BindView(R.id.clear_button)    private FloatingActionButton mClearFab;
+    @BindView(R.id.title_text_view) private TextView mTitleTextView;
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO (3): Replace the findViewById calls with the Butterknife data binding
-        // Bind the views
-        mImageView = (ImageView) findViewById(R.id.image_view);
-        mEmojifyButton = (Button) findViewById(R.id.emojify_button);
-        mShareFab = (FloatingActionButton) findViewById(R.id.share_button);
-        mSaveFab = (FloatingActionButton) findViewById(R.id.save_button);
-        mClearFab = (FloatingActionButton) findViewById(R.id.clear_button);
-        mTitleTextView = (TextView) findViewById(R.id.title_text_view);
+
+        // TODO [✓] (3): Replace the findViewById calls with the Butterknife data binding
+        // Bind the views (OLD)
+        // mImageView = (ImageView) findViewById(R.id.image_view);
+        // mEmojifyButton = (Button) findViewById(R.id.emojify_button);
+        // mShareFab = (FloatingActionButton) findViewById(R.id.share_button);
+        // mSaveFab = (FloatingActionButton) findViewById(R.id.save_button);
+        // mClearFab = (FloatingActionButton) findViewById(R.id.clear_button);
+        // mTitleTextView = (TextView) findViewById(R.id.title_text_view);
+        ButterKnife .bind( this);
     }
 
     /**
@@ -99,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         // Called when you request permission to read and write to external storage
         switch (requestCode) {
             case REQUEST_STORAGE_PERMISSION: {
@@ -158,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         // If the image capture activity was called and was successful
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             // Process the image and set it to the TextView
@@ -200,12 +204,15 @@ public class MainActivity extends AppCompatActivity {
      * @param view The save button.
      */
     public void saveMe(View view) {
+
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
 
         // Save the image
         BitmapUtils.saveImage(this, mResultsBitmap);
     }
+
+
 
     /**
      * OnClick method for the share button, saves and shares the new bitmap.
@@ -222,6 +229,8 @@ public class MainActivity extends AppCompatActivity {
         // Share the image
         BitmapUtils.shareImage(this, mTempPhotoPath);
     }
+
+
 
     /**
      * OnClick for the clear button, resets the app to original state.
