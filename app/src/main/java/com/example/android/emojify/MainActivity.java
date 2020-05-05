@@ -118,27 +118,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the capture image intent
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the temporary File where the photo should go
             File photoFile = null;
-            try {
-                photoFile = BitmapUtils.createTempImageFile(this);
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                ex.printStackTrace();
-            }
+            try { photoFile = BitmapUtils.createTempImageFile(this); }
+            catch (IOException ex) { ex.printStackTrace(); }// Error occurred while creating the File
             // Continue only if the File was successfully created
             if (photoFile != null) {
-
                 // Get the path of the temporary file
                 mTempPhotoPath = photoFile.getAbsolutePath();
-
                 // Get the content URI for the image file
-                Uri photoURI = FileProvider.getUriForFile(this,
+                Uri photoURI = FileProvider .getUriForFile(
+                        this,
                         FILE_PROVIDER_AUTHORITY,
-                        photoFile);
+                        photoFile
+                );
 
                 // Add the URI so the camera can store the image
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -181,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
         
         // Detect the faces
-        Emojifier.detectFacesAndOverlayEmoji(this, mResultsBitmap);
+        mResultsBitmap = Emojifier.detectFacesAndOverlayEmoji(this, mResultsBitmap);
         //TODO [✓] (10): Change the method call from detectFaces() to detectFacesAndOverlayEmoji() and assign the result to mResultsBitmap.
         
         // Set the new bitmap to the ImageView
