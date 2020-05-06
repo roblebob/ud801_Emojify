@@ -42,6 +42,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,17 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     // TODO [✓] (... 3 continued:)
-    @BindView(R.id.image_view)      private ImageView mImageView;
-    @BindView(R.id.emojify_button)  private Button mEmojifyButton;
-    @BindView(R.id.share_button)    private FloatingActionButton mShareFab;
-    @BindView(R.id.share_button)    private FloatingActionButton mSaveFab;
-    @BindView(R.id.clear_button)    private FloatingActionButton mClearFab;
-    @BindView(R.id.title_text_view) private TextView mTitleTextView;
+    @BindView(R.id.image_view)      ImageView mImageView;
+    @BindView(R.id.emojify_button)  Button mEmojifyButton;
+    @BindView(R.id.share_button)    FloatingActionButton mShareFab;
+    @BindView(R.id.save_button)     FloatingActionButton mSaveFab;
+    @BindView(R.id.clear_button)    FloatingActionButton mClearFab;
+    @BindView(R.id.title_text_view) TextView mTitleTextView;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // TODO [✓] (3): Replace the findViewById calls with the Butterknife data binding
         // Bind the views (OLD)
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The emojify me button.
      */
-    public void emojifyMe(View view) {
+    @OnClick(R.id.emojify_button) public void emojifyMe(View view) {
         // Check for the external storage permission
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -101,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override public void onRequestPermissionsResult(  int requestCode,  @NonNull String[] permissions,  @NonNull int[] grantResults) {
         // Called when you request permission to read and write to external storage
         switch (requestCode) {
             case REQUEST_STORAGE_PERMISSION: {
@@ -197,13 +196,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // TODO (4): Replace OnClick methods with Butterknife annotations for OnClicks
+    // TODO [✓] (4): Replace OnClick methods with Butterknife annotations for OnClicks
     /**
      * OnClick method for the save button.
      *
      * @param view The save button.
      */
-    public void saveMe(View view) {
+    @OnClick(R.id.save_button) public void saveMe(View view) {
 
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The share button.
      */
-    public void shareMe(View view) {
+    @OnClick(R.id.share_button) public void shareMe(View view) {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
 
@@ -237,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The clear button.
      */
-    public void clearImage(View view) {
+    @OnClick(R.id.clear_button) public void clearImage(View view) {
         // Clear the image and toggle the view visibility
         mImageView.setImageResource(0);
         mEmojifyButton.setVisibility(View.VISIBLE);
