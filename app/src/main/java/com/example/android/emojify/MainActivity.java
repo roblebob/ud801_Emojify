@@ -43,6 +43,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         // Bind the views
         ButterKnife.bind(this);
 
-        // TODO (2): Set up Timber
-
+        // TODO [✓] (2): Set up Timber
+        Timber.plant(new Timber.DebugTree());
     }
 
     /**
